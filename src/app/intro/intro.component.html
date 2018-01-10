@@ -1,34 +1,40 @@
-<div class="container">
-  <div [class]="introService.images.sketch.className" [ngStyle]="{opacity: currentImage==='sketch'? 1 : 0}" [@fadeIn]>
+<div class="container" (window:resize)="onResize($event)">
+  <div class="playground sketch" [ngStyle]="{opacity: currentImage==='sketch'? 1 : (currentImage==='outline')?0.3:0}" [@fadeIn]>
     <img 
-      [id]="introService.images.sketch.id" 
-      [src]="introService.images.sketch.src" 
-      [alt]="introService.images.sketch.alt"
+      [src]="introService.images.sketchSrc" 
+      [alt]="introService.altText"
       [ngStyle]="{'transform':translateString}"
       >
   </div>
 
-  <div [class]="introService.images.outline.className" [ngStyle]="{opacity: currentImage==='outline'? 1 : 0}">
+  <div class="playground outline" [ngStyle]="{opacity: currentImage==='outline'? 1 : 0}">
     <img 
-      [id]="introService.images.outline.id" 
-      [src]="introService.images.outline.src" 
-      [alt]="introService.images.outline.alt"
+      [src]="introService.images.outlineSrc" 
+      [alt]="introService.altText"
       [ngStyle]="{'transform':translateString}"
       >
   </div>
 
-  <div [class]="introService.images.sigmar.className" [ngStyle]="{opacity: currentImage==='sigmar'? 1 : 0}">
-    <img 
-      [id]="introService.images.sigmar.id" 
-      [src]="introService.images.sigmar.src" 
-      [alt]="introService.images.sigmar.alt"
+  <div class="playground sigmar" [ngStyle]="{opacity: currentImage==='sigmar'? 1 : 0}">
+    <!-- <img 
+      [src]="introService.images.sigmarSrc" 
+      [alt]="introService.altText"
       [ngStyle]="{'transform':translateString}"
-      >
+      > -->
+      <svg 
+        xmlns="http://www.w3.org/2000/svg" 
+        viewBox="0 0 477.63339 236.05674" 
+        [attr.height]="playgroundHeight" 
+        [ngStyle]="{'transform':translateString}" 
+        [attr.fill]="introService.sigmarFill"
+        >
+        <path *ngFor="let letter of introService.sigmarLetters" [ngStyle]="letter.style" [attr.d]="letter.d"/>
+      </svg>
+    </div>
+  <div class="playground click" [ngStyle]="{opacity:currentImage==='sigmar'?1:0}">
+    <span class="click-span" [ngStyle]="introService.clickStyle"><a (click)="onClick()">click</a></span>
   </div>
-  <div class="click">
-    click
-  </div>
-  <div class="contact">
-    limoragam@gmail.com&nbsp;+972.50.7973765
+  <div class="contact" [ngStyle]="{opacity:currentImage==='sigmar'?1:0}">
+    <span><a href="mailto:limoragam@gmail.com">limoragam@gmail.com</a></span><span>+972.50.7973765</span>
   </div>
 </div>

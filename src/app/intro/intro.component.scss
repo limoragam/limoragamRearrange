@@ -3,14 +3,15 @@
 //    border: 3px solid pink;
 }
 
-.image {
+.playground {
     position: absolute;
     top: 0;
     left: 0;
-    width: 100vw;   // It is important that width and height are given to the overflow:hidden element
+    width: 100vw;   // It is important that width and height are given to the overflow:hidden element (and not parent element)
     height: 100vh;
     overflow: hidden;
     transition: 600ms opacity ease-in-out;
+    opacity: 0;
 }
 
 .sketch {
@@ -37,8 +38,42 @@
     }
 }
 
-.contact {
-    width: 100vw;
-    height: 100vh;
+.click {
     text-align: center;
+    font-size: 2em;
+    z-index: 5;
 }
+
+.click-span {
+//    border: 1px solid brown;
+    position: relative;
+    top: 60vh;
+    cursor: pointer;
+    transition: 600ms all ease-in-out;
+}
+
+.contact {
+    text-align: center;
+    width: 100vw;
+    padding-bottom: 2vh;
+    position: fixed;
+    bottom: 0;
+    z-index: 10;
+    transition: 600ms opacity ease-in-out;
+}
+
+span {
+    padding: 0 0.5em;
+}
+
+a {
+   text-decoration: none; 
+}
+
+a:hover {
+    font-weight: 700;
+}
+
+// path {
+//     transition: 600ms all ease-in-out;
+// }
