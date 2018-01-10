@@ -1,0 +1,44 @@
+.container {
+    position: relative;
+//    border: 3px solid pink;
+}
+
+.image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;   // It is important that width and height are given to the overflow:hidden element
+    height: 100vh;
+    overflow: hidden;
+    transition: 600ms opacity ease-in-out;
+}
+
+.sketch {
+    z-index: 1;
+}
+
+.outline {
+    z-index: 1;
+}
+
+.sigmar {
+    z-index: 2;
+}
+
+@media screen and (orientation:landscape) {
+    img {
+        height:100vh;
+    }
+}
+
+@media screen and (orientation:portrait) {
+    img {
+        width:100vw;
+    }
+}
+
+.contact {
+    width: 100vw;
+    height: 100vh;
+    text-align: center;
+}

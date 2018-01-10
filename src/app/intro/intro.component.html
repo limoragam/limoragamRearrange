@@ -1,0 +1,34 @@
+<div class="container">
+  <div [class]="introService.images.sketch.className" [ngStyle]="{opacity: currentImage==='sketch'? 1 : 0}" [@fadeIn]>
+    <img 
+      [id]="introService.images.sketch.id" 
+      [src]="introService.images.sketch.src" 
+      [alt]="introService.images.sketch.alt"
+      [ngStyle]="{'transform':translateString}"
+      >
+  </div>
+
+  <div [class]="introService.images.outline.className" [ngStyle]="{opacity: currentImage==='outline'? 1 : 0}">
+    <img 
+      [id]="introService.images.outline.id" 
+      [src]="introService.images.outline.src" 
+      [alt]="introService.images.outline.alt"
+      [ngStyle]="{'transform':translateString}"
+      >
+  </div>
+
+  <div [class]="introService.images.sigmar.className" [ngStyle]="{opacity: currentImage==='sigmar'? 1 : 0}">
+    <img 
+      [id]="introService.images.sigmar.id" 
+      [src]="introService.images.sigmar.src" 
+      [alt]="introService.images.sigmar.alt"
+      [ngStyle]="{'transform':translateString}"
+      >
+  </div>
+  <div class="click">
+    click
+  </div>
+  <div class="contact">
+    limoragam@gmail.com&nbsp;+972.50.7973765
+  </div>
+</div>
