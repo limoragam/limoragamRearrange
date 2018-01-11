@@ -22,17 +22,17 @@
       [ngStyle]="{'transform':translateString}"
       > -->
       <svg 
+        id="svg"
         xmlns="http://www.w3.org/2000/svg" 
         viewBox="0 0 477.63339 236.05674" 
         [attr.height]="playgroundHeight" 
         [ngStyle]="{'transform':translateString}" 
-        [attr.fill]="introService.sigmarFill"
         >
         <path *ngFor="let letter of introService.sigmarLetters" [ngStyle]="letter.style" [attr.d]="letter.d"/>
       </svg>
     </div>
   <div class="playground click" [ngStyle]="{opacity:currentImage==='sigmar'?1:0}">
-    <span class="click-span" [ngStyle]="introService.clickStyle"><a (click)="onClick()">click</a></span>
+    <span class="click-span" [ngStyle]="introService.clickStyle"><a (click)="onClick()">redesign</a></span>
   </div>
   <div class="contact" [ngStyle]="{opacity:currentImage==='sigmar'?1:0}">
     <span><a href="mailto:limoragam@gmail.com">limoragam@gmail.com</a></span><span>+972.50.7973765</span>
