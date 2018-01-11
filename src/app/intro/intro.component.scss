@@ -68,10 +68,11 @@ span {
 
 a {
    text-decoration: none; 
+   transition: all 200ms ease-in-out;
 }
 
 a:hover {
-    font-weight: 700;
+    color: #373732;
 }
 
 // path {

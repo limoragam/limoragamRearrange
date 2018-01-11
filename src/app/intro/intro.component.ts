@@ -1,6 +1,7 @@
 import { Component, AfterContentInit } from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { IntroService } from './intro.service';
+import { setTimeout } from 'timers';
 
 @Component({
   selector: 'app-intro',
@@ -85,7 +86,11 @@ export class IntroComponent implements AfterContentInit {
   onClick() {
     switch(this.rearrangeIndex) {
       case 0:
-        this.rearrange0();
+        this.rearrange();
+        break;
+
+      case 1:
+        this.scatter();
         break;
 
       default:
@@ -95,12 +100,12 @@ export class IntroComponent implements AfterContentInit {
     this.rearrangeIndex++;
   }
 
-  rearrange0() {
+  rearrange() {
     let letters = document.getElementsByTagName("path");
 
     // Rearrange Limor Agam
     let laYTranslation = letters[0].getBoundingClientRect().height * this.imageResizeFactor;
-    let laXTranslation = (letters[8].getBoundingClientRect().right - letters[0].getBoundingClientRect().left)/6*this.imageResizeFactor;
+    let laXTranslation = (letters[8].getBoundingClientRect().right - letters[0].getBoundingClientRect().left)/5*this.imageResizeFactor;
 
     let limorTranslationString = "translateY(-" + laYTranslation + "px) translateX(" + laXTranslation + "px)";
     let agamTranslationString = "translateX(-" + laXTranslation + "px)";
@@ -114,8 +119,8 @@ export class IntroComponent implements AfterContentInit {
     }
 
     // Rearrange Customized
-    let cusYTranslation = letters[9].getBoundingClientRect().height * this.imageResizeFactor;
-    let cusXTranslation = (letters[18].getBoundingClientRect().right - letters[9].getBoundingClientRect().left)/6*this.imageResizeFactor;
+    let cusYTranslation = letters[9].getBoundingClientRect().height * this.imageResizeFactor *7/8;
+    let cusXTranslation = (letters[18].getBoundingClientRect().right - letters[9].getBoundingClientRect().left)/8*this.imageResizeFactor;
 
     let custoTranslationString = "translateX(" + cusXTranslation + "px)";
     let mizedTranslationString = "translateY(" + cusYTranslation + "px) translateX(-" + cusXTranslation + "px)";
@@ -128,14 +133,14 @@ export class IntroComponent implements AfterContentInit {
       this.introService.sigmarLetters[i].style['transform'] = mizedTranslationString;
     }
 
-    this.introService.sigmarLetters[13].style['fill'] = "#88aa00";
+    this.introService.sigmarLetters[13].style['fill'] = "#373732";
 
     // Rearrange Websites
     let webYTranslation = letters[19].getBoundingClientRect().height * this.imageResizeFactor;
-    let webXTranslation = (letters[26].getBoundingClientRect().right - letters[19].getBoundingClientRect().left)/6*this.imageResizeFactor;
+    let webXTranslation = (letters[26].getBoundingClientRect().right - letters[19].getBoundingClientRect().left)/5*this.imageResizeFactor;
 
     let webTranslationString = "translateY(" + webYTranslation + "px) translateX(" + cusXTranslation + "px)";
-    let sitesTranslationString = "translateY(" + (2*webYTranslation) + "px) translateX(-" + webXTranslation + "px)";
+    let sitesTranslationString = "translateY(" + (2*webYTranslation) + "px) translateX(-" + webXTranslation *7/8 + "px)";
 
     for(let i=19;i<22;++i) {
       this.introService.sigmarLetters[i].style['transform'] = webTranslationString;
@@ -145,7 +150,22 @@ export class IntroComponent implements AfterContentInit {
       this.introService.sigmarLetters[i].style['transform'] = sitesTranslationString;
     }
 
+    // Move click
     this.introService.clickStyle['top'] = "10vh";
-
   }
+
+  scatter() {
+    // delete this.introService.sigmarLetters[0].style['transform'];
+    // this.introService.sigmarLetters[0].style['position'] = 'fixed';
+    // this.introService.sigmarLetters[0].style['top'] = 10;
+    // var root = document.getElementById("svg");
+    // var path = document.getElementById("path");
+    // var point = root.createSVGPoint();
+    // point.x = 0;  // replace this with the x co-ordinate of the path segment
+    // point.y = 0;  // replace this with the y co-ordinate of the path segment
+    // var matrix = path.getTransformToElement(root);
+    // var position = point.matrixTransform(matrix);
+    
+    // alert(position.x + ", " + position.y);
+    }
 }
