@@ -1,7 +1,7 @@
 import { Component, AfterContentInit } from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { IntroService } from './intro.service';
-import { setTimeout } from 'timers';
+import { TweenLite, Elastic, TimelineLite } from 'gsap';
 
 @Component({
   selector: 'app-intro',
@@ -47,8 +47,8 @@ export class IntroComponent implements AfterContentInit {
       setTimeout(()=>{
         this.currentImage = 'sigmar';
         this.introService.clickStyle.opacity = 1;
-      }, 200); //1000
-    },200);  //3000
+      }, 1000); //1000
+    },3000);  //3000
   }
 
   // Set original dimensions by Promise so that things can be done after dimensions are set
@@ -90,6 +90,7 @@ export class IntroComponent implements AfterContentInit {
         break;
 
       case 1:
+      case 2:
         this.scatter();
         break;
 
@@ -104,68 +105,149 @@ export class IntroComponent implements AfterContentInit {
     let letters = document.getElementsByTagName("path");
 
     // Rearrange Limor Agam
-    let laYTranslation = letters[0].getBoundingClientRect().height * this.imageResizeFactor;
-    let laXTranslation = (letters[8].getBoundingClientRect().right - letters[0].getBoundingClientRect().left)/5*this.imageResizeFactor;
-
-    let limorTranslationString = "translateY(-" + laYTranslation + "px) translateX(" + laXTranslation + "px)";
-    let agamTranslationString = "translateX(-" + laXTranslation + "px)";
+    let laY = letters[0].getBoundingClientRect().height * this.imageResizeFactor * -1;
+    let laX = (letters[8].getBoundingClientRect().right - letters[0].getBoundingClientRect().left)/5*this.imageResizeFactor;
 
     for(let i=0;i<5;++i) {
-      this.introService.sigmarLetters[i].style['transform'] = limorTranslationString;
+      let selector = ".letter" + i;
+      TweenLite.to($(selector), 0.01, {
+        y:laY,
+        x:laX,
+        delay:(i*0.05),
+        ease: Elastic.easeInOut.config(1,0.2)
+      });
     }
     
     for(let i=5;i<9;++i) {
-      this.introService.sigmarLetters[i].style['transform'] = agamTranslationString;
+      let selector = ".letter" + i;
+      TweenLite.to($(selector), 0.01, {
+        x:laX * -1,
+        delay:(i*0.05),
+        ease: Elastic.easeInOut.config(1,0.2)
+      });
     }
 
     // Rearrange Customized
-    let cusYTranslation = letters[9].getBoundingClientRect().height * this.imageResizeFactor *7/8;
-    let cusXTranslation = (letters[18].getBoundingClientRect().right - letters[9].getBoundingClientRect().left)/8*this.imageResizeFactor;
-
-    let custoTranslationString = "translateX(" + cusXTranslation + "px)";
-    let mizedTranslationString = "translateY(" + cusYTranslation + "px) translateX(-" + cusXTranslation + "px)";
+    let cusY = letters[9].getBoundingClientRect().height * this.imageResizeFactor *7/8;
+    let cusX = (letters[18].getBoundingClientRect().right - letters[9].getBoundingClientRect().left)/8*this.imageResizeFactor;
 
     for(let i=9;i<14;++i) {
-      this.introService.sigmarLetters[i].style['transform'] = custoTranslationString;
+      let selector = ".letter" + i;
+      TweenLite.to($(selector), 0.01, {
+        x:cusX,
+        delay:((i-9)*0.05),
+        ease: Elastic.easeInOut.config(1,0.2)
+      });
     }
+    this.introService.sigmarLetters[13].style['fill'] = "#373732";
     
     for(let i=14;i<19;++i) {
-      this.introService.sigmarLetters[i].style['transform'] = mizedTranslationString;
+      let selector = ".letter" + i;
+      TweenLite.to($(selector), 0.01, {
+        y:cusY,
+        x:cusX*-1,
+        delay:((i-9)*0.05),
+        ease: Elastic.easeInOut.config(1,0.2)
+      });
     }
 
-    this.introService.sigmarLetters[13].style['fill'] = "#373732";
-
     // Rearrange Websites
-    let webYTranslation = letters[19].getBoundingClientRect().height * this.imageResizeFactor;
-    let webXTranslation = (letters[26].getBoundingClientRect().right - letters[19].getBoundingClientRect().left)/5*this.imageResizeFactor;
-
-    let webTranslationString = "translateY(" + webYTranslation + "px) translateX(" + cusXTranslation + "px)";
-    let sitesTranslationString = "translateY(" + (2*webYTranslation) + "px) translateX(-" + webXTranslation *7/8 + "px)";
+    let webY = letters[19].getBoundingClientRect().height * this.imageResizeFactor;
+    let webX = (letters[26].getBoundingClientRect().right - letters[19].getBoundingClientRect().left)/5*this.imageResizeFactor;
 
     for(let i=19;i<22;++i) {
-      this.introService.sigmarLetters[i].style['transform'] = webTranslationString;
+      let selector = ".letter" + i;
+      TweenLite.to($(selector), 0.01, {
+        y:webY*1.1,
+        x:webX,
+        delay:((i-19)*0.05),
+        ease: Elastic.easeInOut.config(1,0.2)
+      });
     }
     
     for(let i=22;i<27;++i) {
-      this.introService.sigmarLetters[i].style['transform'] = sitesTranslationString;
+      let selector = ".letter" + i;
+      TweenLite.to($(selector), 0.01, {
+        y:webY*2,
+        x:webX*-0.7,
+        delay:((i-19)*0.05),
+        ease: Elastic.easeInOut.config(1,0.2)
+      });
     }
 
     // Move click
-    this.introService.clickStyle['top'] = "10vh";
+    TweenLite.to($(".click-span"), 0.02, {
+      top:'10vh',
+    });
+
+    new TimelineLite()
+      .add(TweenLite.to($("#web"), 0.5, {opacity:1}))
+      .add(TweenLite.to($("#web"), 0.5, {opacity:0}))
+    ;
   }
 
   scatter() {
-    // delete this.introService.sigmarLetters[0].style['transform'];
-    // this.introService.sigmarLetters[0].style['position'] = 'fixed';
-    // this.introService.sigmarLetters[0].style['top'] = 10;
-    // var root = document.getElementById("svg");
-    // var path = document.getElementById("path");
-    // var point = root.createSVGPoint();
-    // point.x = 0;  // replace this with the x co-ordinate of the path segment
-    // point.y = 0;  // replace this with the y co-ordinate of the path segment
-    // var matrix = path.getTransformToElement(root);
-    // var position = point.matrixTransform(matrix);
-    
-    // alert(position.x + ", " + position.y);
+    // larger scatter on second call
+    let yPotential = this.playgroundHeight*this.imageResizeFactor/(10/this.rearrangeIndex);
+    let xPotential = this.playgroundWidth*this.imageResizeFactor/(10/this.rearrangeIndex);
+    console.log(xPotential + " " + yPotential);
+
+    this.introService.sigmarLetters.forEach((letter, i)=>{
+      let rgb = "rgb(" + Math.floor(Math.random()*255) + "," + Math.floor(Math.random()*255) + "," + Math.floor(Math.random()*255) + ")";
+      let rotate =0;
+      if(i%5==0) {
+        rotate = Math.floor(Math.random()*360);
+      }
+
+      switch(i%4) {
+        case 0:
+          TweenLite.to($("."+letter.className), 0.1, {
+//            y:Math.floor(Math.random()*yPotential*-1),
+            y:Math.floor(yPotential*-1),
+            opacity:Math.random().toFixed(1), 
+            scale:Math.random()*2,
+            fill:rgb,
+            rotation:rotate,
+          });
+          break;
+        case 1:
+          TweenLite.to($("."+letter.className), 0.1, {
+            x:Math.floor(xPotential), 
+//            x:Math.floor(Math.random()*xPotential), 
+            opacity:Math.random().toFixed(1), 
+            scale:Math.random()*2,
+            fill:rgb,
+            rotation:rotate,
+          });
+          break;
+        case 2:
+          TweenLite.to($("."+letter.className), 0.1, {
+            y:Math.floor(yPotential), 
+//            y:Math.floor(Math.random()*yPotential), 
+            opacity:Math.random().toFixed(1), 
+            scale:Math.random()*2,
+            fill:rgb,
+            rotation:rotate,
+          });
+          break;
+        case 3:
+          TweenLite.to($("."+letter.className), 0.1, {
+            x:Math.floor(xPotential*-1), 
+//            x:Math.floor(Math.random()*xPotential*-1), 
+            opacity:Math.random().toFixed(1), 
+            scale:Math.random()*2,
+            fill:rgb,
+            rotation:rotate,
+          });
+          break;
+        }
+    });
+
+    // Move click
+    if(this.rearrangeIndex==1) {
+      TweenLite.to($(".click-span"), 0.02, {left:'-15vw', top:'10vh'});
+    } else {
+      TweenLite.to($(".click-span"), 0.02, {left:'15vw', top:'60vh'});
     }
+  }
 }

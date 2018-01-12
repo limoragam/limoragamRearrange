@@ -7,11 +7,13 @@ import { AppComponent } from './app.component';
 import { IntroComponent } from './intro/intro.component';
 
 import { IntroService } from './intro/intro.service';
+import { CharArrayGeneratorPipe } from './intro/char-array-generator.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
-    IntroComponent
+    IntroComponent,
+    CharArrayGeneratorPipe
   ],
   imports: [
     BrowserModule,
